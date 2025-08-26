@@ -1,14 +1,14 @@
-import type { LoaderProps } from '@/types';
-import { memo, useMemo } from 'react';
-import { CodeBlock } from './CodeBlock';
+import type { LoaderProps } from "@/types";
+import { memo, useMemo } from "react";
+import { CodeBlock } from "./CodeBlock";
 
 export const ZeroDependencyExample = memo(
-	({ speed, keyframes }: Partial<LoaderProps>) => {
-		const title = 'Zero Dependency Example';
-		const code = useMemo(
-			() => `const initCliLoader = () => {
+  ({ speed, keyframes }: Partial<LoaderProps>) => {
+    const title = "Zero Dependency Example";
+    const code = useMemo(
+      () => `const initCliLoader = () => {
     // Set keyframes
-    const keyframes = [${keyframes?.map((keyframe) => `"${keyframe}"`).join(', ')}];
+    const keyframes = [${keyframes?.map((keyframe) => `"${keyframe}"`).join(", ")}];
     // Set speed in milliseconds
     const speed = ${speed};
     // Start at the first keyframe
@@ -21,20 +21,21 @@ export const ZeroDependencyExample = memo(
 };
 // Start the loader
 initCliLoader();`,
-			[speed, keyframes],
-		);
+      [speed, keyframes],
+    );
 
-		return <CodeBlock lang='ts' title={title} code={code} />;
-	},
+    return <CodeBlock lang="ts" title={title} code={code} />;
+  },
 );
 
-ZeroDependencyExample.displayName = 'ZeroDependencyExample';
+ZeroDependencyExample.displayName = "ZeroDependencyExample";
 
-export const OhMyZshExample = memo(({ speed, keyframes }: Partial<LoaderProps>) => {
-	const title = 'Oh My Zsh Example';
-	const code = useMemo(
-		() => `function start_loader() {
-    local keyframes=(${keyframes?.map((keyframe) => `"${keyframe}"`).join(' ')}) # Keyframes for the loader
+export const OhMyZshExample = memo(
+  ({ speed, keyframes }: Partial<LoaderProps>) => {
+    const title = "Oh My Zsh Example";
+    const code = useMemo(
+      () => `function start_loader() {
+    local keyframes=(${keyframes?.map((keyframe) => `"${keyframe}"`).join(" ")}) # Keyframes for the loader
     local speed=${speed} # Speed at which the keyframes change
     local pname=$1 # PID of the process to wait for
 
@@ -54,18 +55,19 @@ function custom_loader() {
     (sleep 5) &  # Simulate a long-running task in the background
     start_loader $! # Call the loader with the PID of the background process
 }`,
-		[speed, keyframes],
-	);
+      [speed, keyframes],
+    );
 
-	return <CodeBlock lang='bash' title={title} code={code} />;
-});
+    return <CodeBlock lang="bash" title={title} code={code} />;
+  },
+);
 
-OhMyZshExample.displayName = 'OhMyZshExample';
+OhMyZshExample.displayName = "OhMyZshExample";
 
 export const NextJsComponentExample = memo(({ name }: Partial<LoaderProps>) => {
-	const title = 'Next.js Component Example';
-	const code = useMemo(
-		() => `"use client";
+  const title = "Next.js Component Example";
+  const code = useMemo(
+    () => `"use client";
 
 import React, { useEffect, useState } from 'react';
 
@@ -106,10 +108,10 @@ const Page = () => (
 );
 
 export default Page;`,
-		[name],
-	);
+    [name],
+  );
 
-	return <CodeBlock lang='tsx' title={title} code={code} />;
+  return <CodeBlock lang="tsx" title={title} code={code} />;
 });
 
-NextJsComponentExample.displayName = 'NextJsComponentExample';
+NextJsComponentExample.displayName = "NextJsComponentExample";
