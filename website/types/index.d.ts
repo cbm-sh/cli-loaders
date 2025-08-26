@@ -28,6 +28,12 @@ export type ChangeLogProps = {
 	change: { type: string; notes: string[] }[];
 };
 
+export type CodeProps = {
+	title: string;
+	lang: string;
+	code: string;
+};
+
 export type CodeBlockProps = {
 	code?: string;
 	keyframes?: string[];
