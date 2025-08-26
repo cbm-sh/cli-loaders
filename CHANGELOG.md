@@ -4,16 +4,16 @@
 
 ### Major Changes
 
-- - Full and clean re write of initCliLoader function using constant time to access objects + tree shaking.
-  - Returning the intervalId so users can clear the loader with clearInterval(intervalId).
-  - Updated website to reflect changes in the examples sections.
-  - Site changes and loader updates with the current naming convention (permanent) to follow.
+- Full and clean re write of initCliLoader function using constant time to access objects + tree shaking.
+- Returning the intervalId so users can clear the loader with clearInterval(intervalId).
+- Updated website to reflect changes in the examples sections.
+- Site changes and loader updates with the current naming convention (permanent) to follow.
 
 ## 2.3.1
 
 ### Patch Changes
 
-- exports
+- named exports updated with all loaders.
 
 ## 2.3.0
 

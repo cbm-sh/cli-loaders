@@ -16,7 +16,9 @@ Visit the [website](https://cliloaders.com) to see all loaders, copy keyframes, 
   - [Customizing Everything](#customizing-everything)
   - [Stopping the Loader](#stopping-the-loader)
 - [Available Loaders](#available-loaders)
-- [Performance](#performance)
+- [Examples](#examples)
+  - [Oh My Zsh Example](#oh-my-zsh-example)
+  - [Next.js Component Example](#nextjs-component-example)
 - [Contributing](#contributing)
 - [License](#license)
 - [Special Thanks](#special-thanks)
@@ -139,9 +141,83 @@ Here are some of the available loaders you can use:
 
 For a full list of available loaders, please refer to the [source code](/src/cli-loaders.ts) or the [website](https://cliloaders.com).
 
-## Performance
+## Examples
 
-cli-loaders is, as it should be, very fast. It's tree shakable, and uses 0(1) time complexity to access the loader objects.
+### Oh My Zsh Example
+
+```bash
+function start_loader() {
+    local keyframes=(YOUR_COPIED_KEYFRAMES) # Keyframes for the loader
+    local speed=0.1 # Speed at which the keyframes change
+    local pname=$1 # PID of the process to wait for
+
+    while kill -0 "$pname" 2>/dev/null; do
+        for frame in "${keyframes[@]}"; do
+            printf "\r%s %s" "$frame"
+            sleep $speed
+        done
+    done
+
+    # Clear the loader after the process completes
+    printf "\r%s\n" "Done!"
+}
+
+function custom_loader() {
+    # Example of using the loader with a background task
+    (sleep 5) &  # Simulate a long-running task in the background
+    start_loader $! # Call the loader with the PID of the background process
+}
+```
+
+### Nextjs Component Example
+
+```tsx
+// @/components/Loader.tsx
+"use client";
+
+import React, { useEffect, useState } from 'react';
+
+type LoaderProps = {
+    speed: number;
+    keyframes: string[];
+    className?: string;
+};
+
+export const Loader: React.FC<LoaderProps> = ({ speed, keyframes, className }) => {
+    const [currentFrame, setCurrentFrame] = useState(keyframes[0]);
+
+    useEffect(() => {
+        let index = 0;
+        const interval = setInterval(() => {
+            setCurrentFrame(keyframes[index]);
+            index = (index + 1) % keyframes.length;
+        }, speed);
+
+        return () => clearInterval(interval);
+    }, [keyframes, speed]);
+
+    return (
+        <div className={className}>{currentFrame}</div>
+    );
+};
+```
+
+Then import and use the component:
+
+```tsx
+import { Loader } from "@/components/Loader";
+import { dots_14 } from "cli-loaders";
+
+const Page = () => (
+    <Loader
+        speed={dots_14.speed}
+        keyframes={dots_14.keyframes}
+        className="relative text-4xl font-mono flex flex-col justify-center items-center overflow-hidden"
+    />
+);
+
+export default Page;
+```
 
 ## Contributing
 
